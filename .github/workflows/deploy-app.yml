@@ -1,0 +1,75 @@
+name: Deploy app
+
+on:
+  workflow_call:
+    inputs:
+      application-name:
+        type: string
+        required: true
+    secrets:
+      PG_URL:
+        required: false
+      HEROKU_API_KEY:
+        required: true
+
+jobs:
+  deploy-gateway:
+    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
+    with:
+      application-name: gateway-service
+    secrets:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+  deploy-reservation:
+    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
+    with:
+      application-name: reservation-service
+    secrets:
+      PG_URL: ${{ secrets.PG_URL }}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+  deploy-loyalty:
+    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
+    with:
+      application-name: loyalty-service
+    secrets:
+      PG_URL: ${{ secrets.LOYALTY_PG_URL }}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+  deploy-payment:
+    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
+    with:
+      application-name: payment-service
+    secrets:
+      PG_URL: ${{ secrets.PAYMENT_PG_URL }}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+  build_and_deploy:
+    name: Build ${{ inputs.application-name }}
+    runs-on: ubuntu-latest
+    needs: [ deploy-gateway, deploy-reservation, deploy-loyalty, deploy-payment ]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 16
+        uses: actions/setup-java@v2
+        with:
+          java-version: '16'
+          distribution: 'adopt'
+
+      - name: Build app and image
+        run: cd ${{ inputs.application-name }}; mvn clean package -Dquarkus.container-image.build=true
+        env:
+          PG_URL: ${{ secrets.PG_URL }}
+
+      - name: Login to Heroku
+        run: echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=efim7299@icloud.com registry.heroku.com --password-stdin
+
+      - name: Tag image
+        run: docker tag runner/${{ inputs.application-name }}:0.0.1 registry.heroku.com/rsoi-lab2-${{ inputs.application-name }}/web
+
+      - name: Push image to Heroku registry
+        run: docker push registry.heroku.com/rsoi-lab2-${{inputs.application-name}}/web
+
+      - name: Deploy to Heroku
+        run: HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }} heroku container:release web --app rsoi-lab2-${{ inputs.application-name }}

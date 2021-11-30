@@ -15,17 +15,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      # TODO build, test and deploy project
-
       - name: Run API Tests
         uses: matt-ball/newman-action@master
         with:
-          # TODO insert your <Variant> and <ServiceName>
-          collection: <Variant>/postman/[rsoi] postman_collection.json
-          environment: <Variant>/postman/[rsoi][heroku] postman_environment.json
+          collection: v2/postman/[rsoi] postman_collection.json
+          environment: v2/postman/[rsoi][heroku] postman_environment.json
           delayRequest: 100
           reporters: '[ "cli" ]'
-          envVar: '[{ "key":"serviceName", "value":"<ServiceName>" }, { "key":"herokuApiToken", "value":"${{secrets.HEROKU_API_KEY}}" }]'
+          envVar: '[{ "key":"serviceName", "value":"rsoi-lab2-loyalty-service" }, { "key":"herokuApiToken", "value":"${{secrets.HEROKU_API_KEY}}" }]'
 
       - uses: education/autograding@v1
         id: autograder
