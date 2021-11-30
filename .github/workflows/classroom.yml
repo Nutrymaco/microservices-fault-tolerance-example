@@ -8,14 +8,14 @@ on:
       - master
 jobs:
   deploy-gateway:
-    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
+    uses: bmstu-rsoi/rsoi-2021-lab3-fault-tolerance-Nutrymaco/.github/workflows/deploy-app.yml@develop
     with:
       application-name: gateway-service
     secrets:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
   deploy-reservation:
-    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
+    uses: bmstu-rsoi/rsoi-2021-lab3-fault-tolerance-Nutrymaco/.github/workflows/deploy-app.yml@develop
     with:
       application-name: reservation-service
     secrets:
@@ -23,7 +23,7 @@ jobs:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
   deploy-loyalty:
-    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
+    uses: bmstu-rsoi/rsoi-2021-lab3-fault-tolerance-Nutrymaco/.github/workflows/deploy-app.yml@develop
     with:
       application-name: loyalty-service
     secrets:
@@ -31,7 +31,7 @@ jobs:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
   deploy-payment:
-    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
+    uses: bmstu-rsoi/rsoi-2021-lab3-fault-tolerance-Nutrymaco/.github/workflows/deploy-app.yml@develop
     with:
       application-name: payment-service
     secrets:
