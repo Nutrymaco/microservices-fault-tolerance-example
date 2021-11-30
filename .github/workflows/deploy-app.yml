@@ -13,41 +13,9 @@ on:
         required: true
 
 jobs:
-  deploy-gateway:
-    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
-    with:
-      application-name: gateway-service
-    secrets:
-      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-
-  deploy-reservation:
-    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
-    with:
-      application-name: reservation-service
-    secrets:
-      PG_URL: ${{ secrets.PG_URL }}
-      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-
-  deploy-loyalty:
-    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
-    with:
-      application-name: loyalty-service
-    secrets:
-      PG_URL: ${{ secrets.LOYALTY_PG_URL }}
-      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-
-  deploy-payment:
-    uses: bmstu-rsoi/rsoi-2021-lab2-microservices-Nutrymaco/.github/workflows/deploy-app.yml@develop
-    with:
-      application-name: payment-service
-    secrets:
-      PG_URL: ${{ secrets.PAYMENT_PG_URL }}
-      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-
   build_and_deploy:
     name: Build ${{ inputs.application-name }}
     runs-on: ubuntu-latest
-    needs: [ deploy-gateway, deploy-reservation, deploy-loyalty, deploy-payment ]
     steps:
       - uses: actions/checkout@v2
 
