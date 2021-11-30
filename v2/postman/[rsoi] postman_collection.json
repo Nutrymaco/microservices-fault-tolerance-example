@@ -907,6 +907,15 @@
 					"name": "[failover] Получить список отелей",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"setTimeout(() => {}, 3000);"
+								]
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"exec": [
@@ -1478,6 +1487,15 @@
 				{
 					"name": "[failover] Получить информацию о статусе в программе лояльности",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"setTimeout(() => {}, 3000);"
+								]
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
