@@ -10,7 +10,7 @@ import javax.ws.rs.ext.Provider;
 public class ServiceNotAvailableExceptionMapper implements ExceptionMapper<ServiceNotAvailableException> {
     @Override
     public Response toResponse(ServiceNotAvailableException exception) {
-        return Response.status(500)
+        return Response.status(503)
                 .entity(exception.getMessage())
                 .build();
     }

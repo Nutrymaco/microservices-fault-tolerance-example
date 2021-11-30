@@ -15,11 +15,7 @@ import com.nutrymaco.gateway.dto.CreateReservationResponse;
 import com.nutrymaco.gateway.dto.PaymentDto;
 import com.nutrymaco.gateway.dto.ReservationDto;
 import com.nutrymaco.gateway.exception.ServiceNotAvailableException;
-import com.nutrymaco.gateway.model.Hotel;
-import com.nutrymaco.gateway.model.PaginationResponse;
-import com.nutrymaco.gateway.model.Payment;
-import com.nutrymaco.gateway.model.Reservation;
-import com.nutrymaco.gateway.model.Status;
+import com.nutrymaco.gateway.model.*;
 import com.nutrymaco.gateway.service.LoyaltyServiceClient;
 import com.nutrymaco.gateway.service.PaymentServiceClient;
 import com.nutrymaco.gateway.service.ReservationServiceClient;
@@ -196,7 +192,7 @@ public class GatewayResource {
 	public Map<String, Object> getUserInfo(@HeaderParam("X-User-Name") String username) {
 		return Map.of(
 					  "reservations", getReservations(username),
-					  "loyalty", getLoyalty(username)
+					  "loyalty", loyaltyServiceWrapper.getLoyalty(username).orElse(new Loyalty())
 		);
 	}
 
