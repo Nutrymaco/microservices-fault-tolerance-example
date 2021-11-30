@@ -7,7 +7,7 @@ import static java.util.stream.Collectors.joining;
 public class ServiceNotAvailableException extends RuntimeException {
 
     public ServiceNotAvailableException(String serviceName) {
-        super("%s not available".formatted(Arrays.stream(serviceName.split("-"))
+        super("%s unavailable".formatted(Arrays.stream(serviceName.split("-"))
                 .map(ServiceNotAvailableException::capitalize)
                 .collect(joining(" "))));
     }

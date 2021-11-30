@@ -190,9 +190,10 @@ public class GatewayResource {
 	@GET
 	@Path("/me")
 	public Map<String, Object> getUserInfo(@HeaderParam("X-User-Name") String username) {
+		var loyalty = loyaltyServiceWrapper.getLoyalty(username);
 		return Map.of(
 					  "reservations", getReservations(username),
-					  "loyalty", loyaltyServiceWrapper.getLoyalty(username).orElse(new Loyalty())
+					  "loyalty", loyalty.isEmpty() ? Map.of() : loyalty.get()
 		);
 	}
 
