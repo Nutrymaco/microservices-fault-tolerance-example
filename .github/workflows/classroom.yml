@@ -39,7 +39,7 @@ jobs:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   build:
     name: Autograding
-    runs-on: github-runner-0
+    runs-on: ubuntu-latest
     needs: [ deploy-gateway, deploy-reservation, deploy-loyalty, deploy-payment ]
     steps:
       - uses: actions/checkout@v2
