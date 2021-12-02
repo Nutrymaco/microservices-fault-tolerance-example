@@ -34,7 +34,7 @@ jobs:
         run: echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=efim7299@icloud.com registry.heroku.com --password-stdin
 
       - name: Tag image
-        run: docker tag runner/${{ inputs.application-name }}:0.0.1 registry.heroku.com/rsoi-lab2-${{ inputs.application-name }}/web
+        run: docker tag github-runner/${{ inputs.application-name }}:0.0.1 registry.heroku.com/rsoi-lab2-${{ inputs.application-name }}/web
 
       - name: Push image to Heroku registry
         run: docker push registry.heroku.com/rsoi-lab2-${{inputs.application-name}}/web
