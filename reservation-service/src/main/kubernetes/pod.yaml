@@ -1,0 +1,10 @@
+apiversion: v1
+kind: Pod
+metadata:
+  name: reservation-service
+spec:
+  containers:
+    - name: reservation-service
+      image: quarkus/reservation-service-jvm
+      ports:
+      - container-port: 8081
